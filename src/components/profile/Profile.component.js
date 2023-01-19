@@ -22,7 +22,7 @@ import BgProfile from "../../assets/images/bg-profile.jpg";
 import profilavatar from "../../assets/images/face-1.jpg";
 
 const ProfileComponent = (props) => {
-  const { data } = props;
+  const { data, setModalCreate } = props;
   const { Title } = Typography;
 
   const pencil = [
@@ -110,9 +110,15 @@ const ProfileComponent = (props) => {
         </Col>
         <Col span={24} md={16} className="mb-24 ">
           <Card>
-            <Row style={{ "text-align": "center" }}>
-              <Col span={24} style={{ "text-align": "center" }}>
-                <Button type="text" block style={{ borderRadius: "20px" }}>
+            <Row >
+              <Col span={24}>
+                <Button
+                  onClick={() => {
+                    setModalCreate(true);
+                  }}
+                  type="text"
+                  block
+                  style={{ borderRadius: "20px" }}>
                   What are you thinking ?
                 </Button>
               </Col>
