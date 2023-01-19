@@ -1,5 +1,4 @@
 import React from "react";
-import { User } from "../../data/data";
 import LoginComponent from "../../components/login/Login.component";
 import { LoginNotification } from "../../notifications/LoginNotification";
 import { useNavigate } from "react-router-dom";
@@ -44,6 +43,7 @@ const LoginContainer = () => {
       navigate(PATH.HOME);
       const user = res.user;
       const q = query(collection(db, "users"), where("uid", "==", user.uid));
+      console.log('user: ', user);
       const docs = await getDocs(q);
       if (docs.docs.length === 0) {
         await addDoc(collection(db, "users"), {
@@ -53,6 +53,8 @@ const LoginContainer = () => {
           email: user.email,
         });
       }
+      
+
       
     } catch (err) {
       console.error(err);

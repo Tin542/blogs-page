@@ -7,10 +7,10 @@ import {
   Image,
   Divider,
   List,
-  Skeleton,
+  Affix,
 } from "antd";
 import InfiniteScroll from "react-infinite-scroll-component";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { User } from "../../data/data";
 
 const HomeComponent = (props) => {
@@ -60,31 +60,33 @@ const HomeComponent = (props) => {
           </Row>
         </Col>
         <Col span={24} md={8} className="mb-24">
-          <Card
-            bordered={false}
-            bodyStyle={{ paddingTop: 0 }}
-            className="header-solid h-full  ant-list-yes"
-            title={<h6 className="font-semibold m-0">Friends</h6>}>
-            <InfiniteScroll
-              dataLength={User.length}
-              next={false}
-              hasMore={User.length < 50}
-              endMessage={<Divider plain>It is all, nothing more 🤐</Divider>}
-              scrollableTarget="scrollableDiv">
-              <List
-                dataSource={User}
-                renderItem={(item) => (
-                  <List.Item key={item.email}>
-                    <List.Item.Meta
-                      avatar={<Avatar src={item.avatar} />}
-                      title={<a href="#">{item.username}</a>}
-                      description={item.email}
-                    />
-                  </List.Item>
-                )}
-              />
-            </InfiniteScroll>
-          </Card>
+          <Affix offsetTop={10}>
+            <Card
+              bordered={false}
+              bodyStyle={{ paddingTop: 0 }}
+              className="header-solid h-full  ant-list-yes"
+              title={<h6 className="font-semibold m-0">Friends</h6>}>
+              <InfiniteScroll
+                dataLength={User.length}
+                next={false}
+                hasMore={User.length < 50}
+                endMessage={<Divider plain>It is all, nothing more 🤐</Divider>}
+                scrollableTarget="scrollableDiv">
+                <List
+                  dataSource={User}
+                  renderItem={(item) => (
+                    <List.Item key={item.email}>
+                      <List.Item.Meta
+                        avatar={<Avatar src={item.avatar} />}
+                        title={<a href="#">{item.username}</a>}
+                        description={item.email}
+                      />
+                    </List.Item>
+                  )}
+                />
+              </InfiniteScroll>
+            </Card>
+          </Affix>
         </Col>
       </Row>
     </>

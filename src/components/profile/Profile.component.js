@@ -6,7 +6,7 @@ import {
   Button,
   Descriptions,
   Avatar,
-  Radio,
+  Affix,
   Divider,
   Typography,
   Image,
@@ -15,6 +15,7 @@ import {
   VideoCameraOutlined,
   PictureOutlined,
   FlagOutlined,
+  EditOutlined,
 } from "@ant-design/icons";
 
 import BgProfile from "../../assets/images/bg-profile.jpg";
@@ -56,7 +57,7 @@ const ProfileComponent = (props) => {
                 <Avatar size={74} shape="square" src={profilavatar} />
 
                 <div className="avatar-info">
-                  <h4 className="font-semibold m-0">Sarah Jacob</h4>
+                  <h4 className="font-semibold m-0">Robinnn</h4>
                   <p>CEO / Co-Founder</p>
                 </div>
               </Avatar.Group>
@@ -69,45 +70,43 @@ const ProfileComponent = (props) => {
                 alignItems: "center",
                 justifyContent: "flex-end",
               }}>
-              <Radio.Group defaultValue="a">
-                <Radio.Button value="a">OVERVIEW</Radio.Button>
-                <Radio.Button value="b">TEAMS</Radio.Button>
-                <Radio.Button value="c">PROJECTS</Radio.Button>
-              </Radio.Group>
+              <Button icon={<EditOutlined />}>Edit profile</Button>
             </Col>
           </Row>
         }></Card>
       <Row gutter={[24, 0]}>
         <Col span={24} md={8} className="mb-24 ">
-          <Card
-            bordered={false}
-            title={<h6 className="font-semibold m-0">Profile Information</h6>}
-            className="header-solid h-full card-profile-information"
-            extra={<Button type="link">{pencil}</Button>}
-            bodyStyle={{ paddingTop: 0, paddingBottom: 16 }}>
-            <p className="text-dark">
-              {" "}
-              Hi, I’m Alec Thompson, Decisions: If you can’t decide, the answer
-              is no. If two equally difficult paths, choose the one more painful
-              in the short term (pain avoidance is creating an illusion of
-              equality).{" "}
-            </p>
-            <hr className="my-25" />
-            <Descriptions title="Oliver Liam">
-              <Descriptions.Item label="Full Name" span={3}>
-                Sarah Emily Jacob
-              </Descriptions.Item>
-              <Descriptions.Item label="Mobile" span={3}>
-                (44) 123 1234 123
-              </Descriptions.Item>
-              <Descriptions.Item label="Email" span={3}>
-                sarahjacob@mail.com
-              </Descriptions.Item>
-              <Descriptions.Item label="Location" span={3}>
-                USA
-              </Descriptions.Item>
-            </Descriptions>
-          </Card>
+          <Affix offsetTop={10}>
+            <Card
+              bordered={false}
+              title={<h6 className="font-semibold m-0">Sumary</h6>}
+              className="header-solid h-full card-profile-information"
+              extra={<Button type="link">{pencil}</Button>}
+              bodyStyle={{ paddingTop: 0, paddingBottom: 16 }}>
+              <p className="text-dark">
+                {" "}
+                Hi, I’m Alec Thompson, Decisions: If you can’t decide, the
+                answer is no. If two equally difficult paths, choose the one
+                more painful in the short term (pain avoidance is creating an
+                illusion of equality).{" "}
+              </p>
+              <hr className="my-25" />
+              <Descriptions title="Infomations">
+                <Descriptions.Item label="Full Name" span={3}>
+                  Sarah Emily Jacob
+                </Descriptions.Item>
+                <Descriptions.Item label="Mobile" span={3}>
+                  (44) 123 1234 123
+                </Descriptions.Item>
+                <Descriptions.Item label="Email" span={3}>
+                  sarahjacob@mail.com
+                </Descriptions.Item>
+                <Descriptions.Item label="Location" span={3}>
+                  USA
+                </Descriptions.Item>
+              </Descriptions>
+            </Card>
+          </Affix>
         </Col>
         <Col span={24} md={16} className="mb-24 ">
           <Card>
