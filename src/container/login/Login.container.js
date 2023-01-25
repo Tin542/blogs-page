@@ -40,10 +40,12 @@ const LoginContainer = () => {
   const signInWithGoogle = async () => {
     try {
       const res = await signInWithPopup(auth, googleProvider);
-      navigate(PATH.HOME);
+      
       const user = res.user;
       const q = query(collection(db, "users"), where("uid", "==", user.uid));
       console.log('user: ', user);
+      navigate(PATH.HOME);
+
       const docs = await getDocs(q);
       if (docs.docs.length === 0) {
         await addDoc(collection(db, "users"), {
@@ -53,9 +55,6 @@ const LoginContainer = () => {
           email: user.email,
         });
       }
-      
-
-      
     } catch (err) {
       console.error(err);
       LoginNotification("error");

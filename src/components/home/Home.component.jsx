@@ -1,61 +1,37 @@
-import {
-  Row,
-  Col,
-  Card,
-  Typography,
-  Avatar,
-  Image,
-  Divider,
-  List,
-  Affix,
-} from "antd";
+import { Row, Col, Card, Avatar, Divider, List, Affix } from "antd";
 import InfiniteScroll from "react-infinite-scroll-component";
-import React, { useState } from "react";
+import React from "react";
+import PostCard from "./postCard/PostCard.component";
 import { User } from "../../data/data";
+import { Comments } from "../../data/post";
+
+let commentCount = (postID) => {
+  let count = 0;
+  for (let i in Comments) {
+    if (Comments[i].post.id === postID) count++;
+  }
+  return count;
+};
 
 const HomeComponent = (props) => {
   const { data } = props;
-  const { Title } = Typography;
-
-  const [loading, setLoading] = useState(false);
-  const loadMoreData = () => {
-    if (loading) {
-      return;
-    }
-  };
 
   return (
     <>
       <Row gutter={[24, 0]}>
         <Col span={24} md={16} className="mb-24">
-          <Row gutter={[24, 24]}>
+          <Row gutter={[24, 10]}>
             {data.map((i, index) => (
-              <Col span={24} key={index}>
-                <Card
-                  className="header-solid h-full"
-                  style={{
-                    width: "100%",
-                    marginTop: 16,
-                  }}>
-                  <Avatar.Group>
-                    <Avatar
-                      className="shape-avatar"
-                      shape="square"
-                      size={40}
-                      src={i.user.avatar}></Avatar>
-                    <div className="avatar-info">
-                      <Title level={5}>{i.user.username}</Title>
-                      <p>{i.time}</p>
-                    </div>
-                  </Avatar.Group>{" "}
-                  <p>{i.detail}</p>
-                  {i.image !== "" ? (
-                    <Image height={400} width="100%" src={i.image} />
-                  ) : (
-                    ""
-                  )}
-                </Card>
-              </Col>
+              <PostCard
+                id={i.id}
+                username={i.user.username}
+                avatar={i.user.avatar}
+                image={i.image}
+                detail={i.detail}
+                like={i.like}
+                time={i.time}
+                commentCount={commentCount(i.id)}
+              />
             ))}
           </Row>
         </Col>

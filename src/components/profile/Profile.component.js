@@ -137,7 +137,7 @@ const ProfileComponent = (props) => {
                       }}
                     />
                   }>
-                  Video Call
+                  Live
                 </Button>
               </Col>
               <Col span={8} style={{ "text-align": "center" }}>
