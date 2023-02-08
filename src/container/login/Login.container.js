@@ -21,12 +21,16 @@ import {
   addDoc,
 } from "firebase/firestore";
 import { useAuthState } from "react-firebase-hooks/auth";
+import { useDispatch } from "react-redux";
+import { handleLoginWithGoogle } from "../../redux-flow/action";
 
 const LoginContainer = () => {
   
   const navigate = useNavigate();
   const [user, loading, error] = useAuthState(auth);
   const googleProvider = new GoogleAuthProvider();
+
+  const dispatch = useDispatch();
 
   const logInWithEmailAndPassword = async (email, password) => {
     try {
@@ -44,6 +48,11 @@ const LoginContainer = () => {
       const user = res.user;
       const q = query(collection(db, "users"), where("uid", "==", user.uid));
       console.log('user: ', user);
+      dispatch(handleLoginWithGoogle({
+        email: user.email,
+        name: user.displayName,
+        photo: user.photoURL
+      }))
       navigate(PATH.HOME);
 
       const docs = await getDocs(q);

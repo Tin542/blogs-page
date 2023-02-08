@@ -1,17 +1,28 @@
-import React from "react";
-import { Button, Modal, Layout, Avatar, Typography, Input, Row, Col, Divider } from "antd";
+import React, { useState } from "react";
 import {
-    PictureOutlined,
-    FlagOutlined,
-    TagsOutlined,
-  } from "@ant-design/icons";
+  Button,
+  Modal,
+  Layout,
+  Avatar,
+  Typography,
+  Input,
+  Row,
+  Col,
+  Divider,
+  Popover,
+} from "antd";
+import { PictureOutlined, FlagOutlined, TagsOutlined } from "@ant-design/icons";
 import profilavatar from "../../../assets/images/face-1.jpg";
+import MarkdownEditorComponent from "../../common/markdown/MarkdownEditor";
+import MarkdownViewComponent from "../../common/markdown/MarkdownView";
 
 const ModalCreatePostComponent = (props) => {
   const { isModalOpen, setModalCreate } = props;
-  const { Header, Footer, Sider, Content } = Layout;
+  const { Header, Content } = Layout;
   const { Title } = Typography;
   const { TextArea } = Input;
+
+  const [detail, setDetail] = useState("");
 
   const handleOk = () => {
     setModalCreate(false);
@@ -19,6 +30,7 @@ const ModalCreatePostComponent = (props) => {
   const handleCancel = () => {
     setModalCreate(false);
   };
+
   return (
     <>
       <Modal open={isModalOpen} onCancel={handleCancel} footer={false}>
@@ -43,7 +55,8 @@ const ModalCreatePostComponent = (props) => {
                 <p>michael@mail.com</p>
               </div>
             </Avatar.Group>{" "}
-            <TextArea style={{marginBottom: '20px'}} placeholder="What are you thinking ?" bordered rows={4} /> {" "}
+            <MarkdownEditorComponent value={detail} setValue={setDetail} />
+            <MarkdownViewComponent value={detail} />
             <Row gutter={[5, 5]}>
               <Col span={8} style={{ "text-align": "center" }}>
                 <Button
@@ -88,8 +101,10 @@ const ModalCreatePostComponent = (props) => {
                 </Button>
               </Col>
             </Row>
-            <Divider/>
-            <Button type='primary' block>Create</Button>
+            <Divider />
+            <Button type="primary" block>
+              Create
+            </Button>
           </Content>
         </Layout>
       </Modal>
