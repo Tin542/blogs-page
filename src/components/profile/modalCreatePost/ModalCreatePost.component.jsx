@@ -9,7 +9,6 @@ import {
   Row,
   Col,
   Divider,
-  Popover,
 } from "antd";
 import { PictureOutlined, FlagOutlined, TagsOutlined } from "@ant-design/icons";
 import profilavatar from "../../../assets/images/face-1.jpg";

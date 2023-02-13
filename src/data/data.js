@@ -7,6 +7,7 @@ import ava6 from '../assets/images/face-6.jpeg';
 
 export const User = [
     {
+        uid: 1,
         username: 'Robinnn',
         password: 'thanhtin089',
         name: 'Nguyễn Thành Tín',
@@ -34,15 +35,6 @@ export const User = [
         avatar: ava3
     },
     {
-        username: 'Nhiii',
-        passsword: '123456',
-        name: 'Nguyễn Minh Nhi',
-        dob: '10/5/2007',
-        address: '65 Võ Văn Kiệt',
-        gender:'female',
-        avatar: ava4
-    },
-    {
         username: 'MeowYuu',
         passsword: '123456',
         name: 'Trần Quang Khải',
@@ -59,33 +51,6 @@ export const User = [
         address: 'Quận 12',
         gender:'male',
         avatar: ava6
-    }
-]
-
-export const ToDoList = [
-    {
-        work: 'Learn Javascript',
-        priority: 'High',
-        status: 'Completed',
-        date: '15/12/2022'
-    },
-    {
-        work: 'Play Game',
-        priority: 'Middle',
-        status: 'Not done',
-        date: '15/12/2022'
-    },
-    {
-        work: 'Done task',
-        priority: 'Middle',
-        status: 'Not done',
-        date: '15/12/2022'
-    },
-    {
-        work: 'House work',
-        priority: 'Low',
-        status: 'Completed',
-        date: '15/12/2022'
     }
 ]
 
