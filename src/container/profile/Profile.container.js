@@ -12,7 +12,7 @@ const ProfileContainer = () => {
 
   return (
     <>
-      <ProfileComponent data={Post} setModalCreate={setModalCreate} />
+      <ProfileComponent user={user} data={Post} setModalCreate={setModalCreate} />
       {modalCreate ? <ModalCreatePost isModalOpen={modalCreate} setModalCreate={setModalCreate} /> : ""}
     </>
   );

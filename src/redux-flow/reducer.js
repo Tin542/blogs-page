@@ -1,8 +1,11 @@
+import {USER_STORE} from '../constants/AppConstant';
+
 const userInitState = {
-  filters: {
+  data: {
     search: "",
+    users: JSON.parse(localStorage.getItem(USER_STORE)) || {},
   },
-  users: [],
+  
 };
 
 const rootReducer = (state = userInitState, action) => {
@@ -10,8 +13,8 @@ const rootReducer = (state = userInitState, action) => {
     case "robin/gooleLogin":
       return {
         ...state,
-        users: [...state.users, action.payload],
-      };
+        data: {...state.data, users: action.payload},
+      }
     default:
       return state;
   }

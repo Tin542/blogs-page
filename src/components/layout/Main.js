@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import { Layout, Drawer, Affix } from "antd";
+import { Layout, Affix } from "antd";
 import Sidenav from "./Sidenav";
 import Footer from "./Footer";
 import Header from "./Header";

@@ -22,7 +22,7 @@ import BgProfile from "../../assets/images/bg-profile.jpg";
 import profilavatar from "../../assets/images/face-1.jpg";
 
 const ProfileComponent = (props) => {
-  const { data, setModalCreate } = props;
+  const { data, setModalCreate, user } = props;
   const { Title } = Typography;
 
   const pencil = [
@@ -54,11 +54,11 @@ const ProfileComponent = (props) => {
           <Row justify="space-between" align="middle" gutter={[24, 0]}>
             <Col span={24} md={12} className="col-info">
               <Avatar.Group>
-                <Avatar size={74} shape="square" src={profilavatar} />
+                <Avatar size={74} shape="square" src={user.photo} />
 
                 <div className="avatar-info">
-                  <h4 className="font-semibold m-0">Robinnn</h4>
-                  <p>CEO / Co-Founder</p>
+                  <h4 className="font-semibold m-0">{user.name}</h4>
+                  <p>--</p>
                 </div>
               </Avatar.Group>
             </Col>
