@@ -10,7 +10,12 @@ const userInitState = {
 
 const rootReducer = (state = userInitState, action) => {
   switch (action.type) {
-    case "robin/gooleLogin":
+    case "auth/gooleLogin":
+      return {
+        ...state,
+        data: {...state.data, users: action.payload},
+      }
+    case 'auth/updateProfile' :
       return {
         ...state,
         data: {...state.data, users: action.payload},

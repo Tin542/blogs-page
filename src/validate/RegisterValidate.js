@@ -1,5 +1,6 @@
 const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
-const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{6,}$/;
+const phoneRegex =
+  /^(0|\+84)(\s|\.)?((3[2-9])|(5[689])|(7[06-9])|(8[1-689])|(9[0-46-9]))(\d)(\s|\.)?(\d{3})(\s|\.)?(\d{3})$/;
 
 export const email = [
   {
@@ -12,13 +13,48 @@ export const email = [
   },
 ];
 
+export const username = [
+  {
+    required: true,
+    message: 'Please input your Username!'
+  }
+];
+
+export const fullname = [
+  {
+    required: true,
+    message: 'Please input your full name!'
+  }
+];
+
 export const password = [
-    {
-      required: true,
-      message: "Please input your password!",
-    },
-    {
-      pattern: new RegExp(passwordRegex),
-      message: "Password containing at least 6 charaters, 1 number, 1 uppercase, 1 lowercase and dont conatin special charaters ! ",
-    },
-  ];
+  {
+    required: true,
+    message: 'Please input your new Password!'
+  }
+];
+
+export const confirm = [
+  {
+    required: true,
+    message: 'Please confirm your password!'
+  },
+  ({ getFieldValue }) => ({
+    validator(_, value) {
+      if (!value || getFieldValue('password') === value) return Promise.resolve();
+
+      return Promise.reject(new Error('Password not matched!'));
+    }
+  })
+];
+
+export const phone = [
+  {
+    required: true,
+    message: 'Please enter your phone number!'
+  },
+  {
+    pattern: new RegExp(phoneRegex),
+    message: 'Phone number invalid!'
+  }
+];

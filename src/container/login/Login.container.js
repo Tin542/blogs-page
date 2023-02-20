@@ -7,28 +7,24 @@ import {
   GoogleAuthProvider,
   signInWithPopup,
   signInWithEmailAndPassword,
-  
 } from "firebase/auth";
-import {
-  auth,
-  db
-} from "../../firebase/FirebaseConfig";
+import { auth, db } from "../../firebase/FirebaseConfig";
 import {
   query,
   getDocs,
   collection,
   where,
   addDoc,
+  doc,
+  getDoc,
+  setDoc,
 } from "firebase/firestore";
-import { useAuthState } from "react-firebase-hooks/auth";
 import { useDispatch } from "react-redux";
 import { handleLoginWithGoogle } from "../../redux-flow/action";
-import {USER_STORE} from '../../constants/AppConstant';
 
 const LoginContainer = () => {
-  
   const navigate = useNavigate();
-  const [user, loading, error] = useAuthState(auth);
+  // const [user, loading, error] = useAuthState(auth);
   const googleProvider = new GoogleAuthProvider();
 
   const dispatch = useDispatch();
@@ -45,25 +41,69 @@ const LoginContainer = () => {
   const signInWithGoogle = async () => {
     try {
       const res = await signInWithPopup(auth, googleProvider);
-      
       const user = res.user;
+      console.log("user", user);
       const q = query(collection(db, "users"), where("uid", "==", user.uid));
-      console.log('user: ', user);
-      dispatch(handleLoginWithGoogle({
-        email: user.email,
-        name: user.displayName,
-        photo: user.photoURL
-      }))
-      navigate(PATH.HOME);
-
       const docs = await getDocs(q);
+
+      const docId = "";
+
+      // check if user existed in db
       if (docs.docs.length === 0) {
         await addDoc(collection(db, "users"), {
           uid: user.uid,
           name: user.displayName,
           authProvider: "google",
           email: user.email,
+          photo: user.photoURL,
+          sumary: "",
+          phone: "",
+          gender: "",
+          dob: "",
+          background: "",
+          password: "",
+          username: "",
         });
+        dispatch(
+          handleLoginWithGoogle({
+            uid: user.uid,
+            name: user.displayName,
+            authProvider: "google",
+            email: user.email,
+            photo: user.photoURL,
+            sumary: "",
+            phone: "",
+            gender: "",
+            dob: "",
+            background: "",
+            username: "",
+          })
+        );
+        navigate(PATH.REGISTRATION);
+      } else {
+        const querySnapshot = await getDocs(q); 
+        querySnapshot.forEach((doc) => {
+          // doc.data() is never undefined for query doc snapshots
+          // get user's data from firestore to store to redux
+          const userQuery = doc.data();
+          console.log('user query', userQuery);
+          dispatch(
+            handleLoginWithGoogle({
+              uid: userQuery.uid,
+              name: userQuery.name,
+              authProvider: "google",
+              email: userQuery.email,
+              photo: userQuery.photo,
+              sumary: userQuery.sumary,
+              phone: userQuery.phone,
+              gender: userQuery.gender,
+              dob: userQuery.dob,
+              background: userQuery.background,
+              username: userQuery.username,
+            })
+          );
+        });
+        navigate(PATH.HOME);
       }
     } catch (err) {
       console.error(err);
@@ -74,7 +114,6 @@ const LoginContainer = () => {
   const onFinish = (data) => {
     logInWithEmailAndPassword(data.email, data.password);
   };
-
 
   return (
     <>

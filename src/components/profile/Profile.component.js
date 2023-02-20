@@ -19,11 +19,12 @@ import {
 } from "@ant-design/icons";
 
 import BgProfile from "../../assets/images/bg-profile.jpg";
-import profilavatar from "../../assets/images/face-1.jpg";
 
 const ProfileComponent = (props) => {
   const { data, setModalCreate, user } = props;
   const { Title } = Typography;
+
+  console.log('user photo', user.photo);
 
   const pencil = [
     <svg
@@ -58,7 +59,7 @@ const ProfileComponent = (props) => {
 
                 <div className="avatar-info">
                   <h4 className="font-semibold m-0">{user.name}</h4>
-                  <p>--</p>
+                  <p>{user.username}</p>
                 </div>
               </Avatar.Group>
             </Col>
@@ -84,25 +85,24 @@ const ProfileComponent = (props) => {
               extra={<Button type="link">{pencil}</Button>}
               bodyStyle={{ paddingTop: 0, paddingBottom: 16 }}>
               <p className="text-dark">
-                {" "}
-                Hi, I’m Alec Thompson, Decisions: If you can’t decide, the
-                answer is no. If two equally difficult paths, choose the one
-                more painful in the short term (pain avoidance is creating an
-                illusion of equality).{" "}
+                {user.sumary}
               </p>
               <hr className="my-25" />
               <Descriptions title="Infomations">
                 <Descriptions.Item label="Full Name" span={3}>
-                  Sarah Emily Jacob
+                  {user.name}
+                </Descriptions.Item>
+                <Descriptions.Item label="Date of birth" span={3}>
+                  {user.dob}
                 </Descriptions.Item>
                 <Descriptions.Item label="Mobile" span={3}>
-                  (44) 123 1234 123
+                  {user.phone}
                 </Descriptions.Item>
                 <Descriptions.Item label="Email" span={3}>
-                  sarahjacob@mail.com
+                  {user.email}
                 </Descriptions.Item>
-                <Descriptions.Item label="Location" span={3}>
-                  USA
+                <Descriptions.Item label="Gender" span={3}>
+                  {user.gender}
                 </Descriptions.Item>
               </Descriptions>
             </Card>

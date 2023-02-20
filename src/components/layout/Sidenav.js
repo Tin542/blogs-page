@@ -95,7 +95,7 @@ function Sidenav({ color }) {
               }}>
               {dashboard}
             </span>
-            <span className="label">Home</span>
+            <span>Home</span>
           </NavLink>
         </Menu.Item>
         <Menu.Item key="2">
@@ -107,7 +107,7 @@ function Sidenav({ color }) {
               }}>
               {profile}
             </span>
-            <span className="label">Profile</span>
+            <span>Profile</span>
           </NavLink>
         </Menu.Item>
         <Menu.Item key="3">
@@ -119,7 +119,7 @@ function Sidenav({ color }) {
               }}>
               {logout}
             </span>
-            <span className="label">Log out</span>
+            <span>Log out</span>
           </NavLink>
         </Menu.Item>
       </Menu>
