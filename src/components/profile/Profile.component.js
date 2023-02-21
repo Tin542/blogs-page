@@ -26,6 +26,14 @@ const ProfileComponent = (props) => {
 
   console.log('user photo', user.photo);
 
+  let bgImage;
+
+  if(user.background !== ''){
+    bgImage = user.background;
+  }else{
+    bgImage = BgProfile;
+  }
+
   const pencil = [
     <svg
       width="20"
@@ -46,7 +54,7 @@ const ProfileComponent = (props) => {
     <>
       <div
         className="profile-nav-bg"
-        style={{ backgroundImage: "url(" + BgProfile + ")" }}></div>
+        style={{ backgroundImage: "url(" + bgImage + ")" }}></div>
 
       <Card
         className="card-profile-head"

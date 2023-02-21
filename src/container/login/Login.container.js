@@ -15,9 +15,6 @@ import {
   collection,
   where,
   addDoc,
-  doc,
-  getDoc,
-  setDoc,
 } from "firebase/firestore";
 import { useDispatch } from "react-redux";
 import { handleLoginWithGoogle } from "../../redux-flow/action";
@@ -31,8 +28,32 @@ const LoginContainer = () => {
 
   const logInWithEmailAndPassword = async (email, password) => {
     try {
-      await signInWithEmailAndPassword(auth, email, password);
-      navigate(PATH.HOME);
+      const res = await signInWithEmailAndPassword(auth, email, password);
+      const user = res.user;
+      const q = query(collection(db, "users"), where("uid", "==", user.uid));
+      const querySnapshot = await getDocs(q); 
+        querySnapshot.forEach((doc) => {
+          // doc.data() is never undefined for query doc snapshots
+          // get user's data from firestore to store to redux
+          const userQuery = doc.data();
+          console.log('user query', userQuery);
+          dispatch(
+            handleLoginWithGoogle({
+              uid: userQuery.uid,
+              name: userQuery.name,
+              authProvider: "google",
+              email: userQuery.email,
+              photo: userQuery.photo,
+              sumary: userQuery.sumary,
+              phone: userQuery.phone,
+              gender: userQuery.gender,
+              dob: userQuery.dob,
+              background: userQuery.background,
+              username: userQuery.username,
+            })
+          );
+        });
+        navigate(PATH.HOME);
     } catch (err) {
       LoginNotification("error");
     }
@@ -42,11 +63,8 @@ const LoginContainer = () => {
     try {
       const res = await signInWithPopup(auth, googleProvider);
       const user = res.user;
-      console.log("user", user);
       const q = query(collection(db, "users"), where("uid", "==", user.uid));
       const docs = await getDocs(q);
-
-      const docId = "";
 
       // check if user existed in db
       if (docs.docs.length === 0) {
