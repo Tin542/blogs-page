@@ -19,7 +19,6 @@ const RegistrationContainer = () => {
 
   const onFinish = async (data) => {
     data.sumary = sumary;
-    console.log("data updated: ", data);
     
     const userNameDuplicated = query(
       collection(db, "users"),
@@ -40,7 +39,6 @@ const RegistrationContainer = () => {
           phone: data.phone,
           gender: data.gender,
           dob: data.dateOfBirth,
-          password: data.password,
           username: data.username
         });
       });

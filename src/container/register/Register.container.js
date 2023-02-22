@@ -57,8 +57,7 @@ const RegisterContainer = () => {
   const onFinish = async (data) => {
     data.photo = photo;
     data.background = background;
-    data.sumary = sumary;
-    console.log("data", data);
+    data.sumary = sumary
 
     const userNameDuplicated = query(
       collection(db, "users"),

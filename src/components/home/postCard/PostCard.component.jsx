@@ -28,7 +28,6 @@ const PostCard = (props) => {
   const [listComment, setListComment] = useState([]);
 
   const onChangeWordCount = (e) => {
-    console.log("Change:", e.target.value);
   };
 
   let listComments = (postID) => {

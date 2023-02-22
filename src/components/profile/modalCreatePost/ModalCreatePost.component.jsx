@@ -19,7 +19,6 @@ const ModalCreatePostComponent = (props) => {
   const { isModalOpen, setModalCreate } = props;
   const { Header, Content } = Layout;
   const { Title } = Typography;
-  const { TextArea } = Input;
 
   const [detail, setDetail] = useState("");
 

@@ -36,7 +36,6 @@ const LoginContainer = () => {
           // doc.data() is never undefined for query doc snapshots
           // get user's data from firestore to store to redux
           const userQuery = doc.data();
-          console.log('user query', userQuery);
           dispatch(
             handleLoginWithGoogle({
               uid: userQuery.uid,
@@ -104,7 +103,6 @@ const LoginContainer = () => {
           // doc.data() is never undefined for query doc snapshots
           // get user's data from firestore to store to redux
           const userQuery = doc.data();
-          console.log('user query', userQuery);
           dispatch(
             handleLoginWithGoogle({
               uid: userQuery.uid,

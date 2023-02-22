@@ -21,16 +21,14 @@ import {
 import BgProfile from "../../assets/images/bg-profile.jpg";
 
 const ProfileComponent = (props) => {
-  const { data, setModalCreate, user } = props;
+  const { data, setModalCreate, user, setModal, setMOdalUpdateAvatar, setModalUpdateBG } = props;
   const { Title } = Typography;
-
-  console.log('user photo', user.photo);
 
   let bgImage;
 
-  if(user.background !== ''){
+  if (user.background !== "") {
     bgImage = user.background;
-  }else{
+  } else {
     bgImage = BgProfile;
   }
 
@@ -79,7 +77,8 @@ const ProfileComponent = (props) => {
                 alignItems: "center",
                 justifyContent: "flex-end",
               }}>
-              <Button icon={<EditOutlined />}>Edit profile</Button>
+              <Button onClick={()=>setMOdalUpdateAvatar(true)} icon={<EditOutlined />}>Edit Avatar</Button>
+              <Button onClick={()=>setModalUpdateBG(true)} icon={<EditOutlined />}>Edit Background</Button>
             </Col>
           </Row>
         }></Card>
@@ -90,11 +89,13 @@ const ProfileComponent = (props) => {
               bordered={false}
               title={<h6 className="font-semibold m-0">Sumary</h6>}
               className="header-solid h-full card-profile-information"
-              extra={<Button type="link">{pencil}</Button>}
+              extra={
+                <Button onClick={() => setModal(true)} type="link">
+                  {pencil}
+                </Button>
+              }
               bodyStyle={{ paddingTop: 0, paddingBottom: 16 }}>
-              <p className="text-dark">
-                {user.sumary}
-              </p>
+              <p className="text-dark">{user.sumary}</p>
               <hr className="my-25" />
               <Descriptions title="Infomations">
                 <Descriptions.Item label="Full Name" span={3}>
@@ -118,7 +119,7 @@ const ProfileComponent = (props) => {
         </Col>
         <Col span={24} md={16} className="mb-24 ">
           <Card>
-            <Row >
+            <Row>
               <Col span={24}>
                 <Button
                   onClick={() => {

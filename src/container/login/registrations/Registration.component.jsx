@@ -104,25 +104,8 @@ const RegisterComponent = (props) => {
                         placeholder="Username"
                       />
                     </Form.Item>
-                    <Form.Item name="password" rules={password}>
-                      <FloatLabelInput
-                        type="password"
-                        label="Password"
-                        placeholder="Password"
-                        suffix={
-                          <Tooltip title="">
-                            <InfoCircleOutlined />
-                          </Tooltip>
-                        }
-                      />
-                    </Form.Item>
-                    <Form.Item name="Repassword" rules={confirm}>
-                      <FloatLabelInput
-                        type="password"
-                        label="RePassword"
-                        placeholder="RePassword"
-                      />
-                    </Form.Item>
+                    
+                    
                     <Form.Item name="phone" rules={phone}>
                       <FloatLabelInput
                         label="Phone number"
@@ -132,7 +115,7 @@ const RegisterComponent = (props) => {
                     </Form.Item>
                     <Form.Item name="gender">
                       <Select
-                        showSearch
+                        size={'large'}
                         placeholder="Select your gender"
                         optionFilterProp="children"
                         filterOption={(input, option) =>
