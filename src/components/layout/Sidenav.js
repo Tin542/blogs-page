@@ -4,11 +4,10 @@ import logo from "../../assets/images/logo.png";
 import { signOut } from "firebase/auth";
 import { auth } from "../../firebase/FirebaseConfig";
 import { useDispatch } from "react-redux";
-import { handleLogout } from "../../redux-flow/action";
 import { useNavigate } from "react-router-dom";
 import { PATH } from "../../constants/path/Path";
 import { persistor } from "../../redux-flow/store";
-import { USER_STORE } from "../../constants/AppConstant";
+import { USER_STORE, POST_STORE } from "../../constants/AppConstant";
 
 function Sidenav({ color }) {
   const { pathname } = useLocation();
@@ -20,7 +19,8 @@ function Sidenav({ color }) {
   const handleSighOut = () => {
     signOut(auth)
       .then(() => {
-        localStorage.removeItem(USER_STORE)
+        localStorage.removeItem(USER_STORE);
+        localStorage.removeItem(POST_STORE);
         persistor.pause();
         persistor.flush().then(() => {
           return persistor.purge();
@@ -82,7 +82,7 @@ function Sidenav({ color }) {
     <>
       <div className="brand">
         <img src={logo} alt="" />
-        <span>My website</span>
+        <span>Diary Blogs</span>
       </div>
       <hr />
       <Menu theme="light" mode="inline">

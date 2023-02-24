@@ -81,7 +81,7 @@ const ModalUpdateProfileComponent = (props) => {
           phone: data.phone,
           gender: data.gender,
           dob: data.dateOfBirth,
-          background: "",
+          background: user.background,
           username: data.username,
         })
       );

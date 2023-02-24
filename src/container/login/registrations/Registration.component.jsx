@@ -10,20 +10,16 @@ import {
   Spin,
   Divider,
   Select,
-  Tooltip,
 } from "antd";
-import { LoadingOutlined, InfoCircleOutlined } from "@ant-design/icons";
+import { LoadingOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
 import FooterComponent from "../../../components/common/FooterComponent";
 import {
-  password,
   phone,
-  confirm,
   username,
   fullname
 } from "../../../validate/RegisterValidate";
 import MarkdownEditorComponent from "../../../components/common/markdown/MarkdownEditor";
-import MarkdownViewComponent from "../../../components/common/markdown/MarkdownView";
 import FloatLabelInput from "../../../components/common/floatingLabelInput/FloatingLabelInput.component";
 
 const { Title } = Typography;
@@ -150,7 +146,6 @@ const RegisterComponent = (props) => {
                         value={sumary}
                         setValue={setSumary}
                       />
-                      <MarkdownViewComponent value={sumary} />
                     </Form.Item>
                   </Col>
                 </Row>

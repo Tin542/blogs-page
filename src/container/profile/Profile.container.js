@@ -4,22 +4,46 @@ import ModalCreatePost from "../../components/profile/modalCreatePost/ModalCreat
 import ModalUpdateProfileComponent from "../../components/profile/modalUpdateProfile/ModalUpdateprofile.component";
 import ModalUpdateAvatarComponent from "../../components/profile/modalUpdatePhoto/ModalUpdateAvatar.component";
 import ModalUpdateBGComponent from "../../components/profile/modalUpdatePhoto/ModalUpdateBG.component";
-import { Post } from "../../data/post";
+
 import { useSelector } from "react-redux";
-import { userSelector } from "../../redux-flow/selector";
+import { userSelector, postSelector } from "../../redux-flow/selector";
+
+import { collection, query, where, getDocs } from "firebase/firestore";
+import { auth, db } from "../../firebase/FirebaseConfig";
+import { useEffect } from "react";
 
 const ProfileContainer = () => {
   const user = useSelector(userSelector);
+  const [posts, setPosts] = useState([]);
+  const [loading, setLoading] = useState(true);
+
   const [modalCreate, setModalCreate] = useState(false);
   const [modalUpdateProfile, setModalUpdateProfile] = useState(false);
   const [modalUpdateAvatar, setMOdalUpdateAvatar] = useState(false);
   const [modalUpdateBG, setModalUpdateBG] = useState(false);
 
+  useEffect(() => {
+    getPost();
+  }, [loading]);
+  const getPost = async () => {
+    let listPost = [];
+    const q = query(collection(db, "posts"), where("uid", "==", user.uid));
+    const querySnapshot = await getDocs(q);
+    querySnapshot.forEach((doc) => {
+      // doc.data() is never undefined for query doc snapshots
+      listPost.push(doc.data());
+    });
+
+    setPosts(listPost);
+    setLoading(false);
+  };
+
   return (
     <>
       <ProfileComponent
+        loading={loading}
         user={user}
-        data={Post}
+        data={posts}
         setModalCreate={setModalCreate}
         setModal={setModalUpdateProfile}
         setMOdalUpdateAvatar={setMOdalUpdateAvatar}
@@ -29,6 +53,7 @@ const ProfileContainer = () => {
         <ModalCreatePost
           isModalOpen={modalCreate}
           setModalCreate={setModalCreate}
+          setLoading={setLoading}
         />
       ) : (
         ""

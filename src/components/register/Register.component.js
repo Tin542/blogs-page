@@ -17,7 +17,6 @@ import { LoadingOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
 import {
   confirm,
-  email,
   fullname,
   password,
   phone,
@@ -26,7 +25,6 @@ import {
 import FooterComponent from "../common/FooterComponent";
 import FloatLabelInput from "../common/floatingLabelInput/FloatingLabelInput.component";
 import MarkdownEditorComponent from "../common/markdown/MarkdownEditor";
-import MarkdownViewComponent from "../common/markdown/MarkdownView";
 import UploadImageContainer from "../common/UploadImage/UploadImage.container";
 
 const { Title } = Typography;
@@ -172,7 +170,6 @@ const RegisterComponent = (props) => {
                         value={sumary}
                         setValue={setSumary}
                       />
-                      <MarkdownViewComponent value={sumary} />
                     </Form.Item>
                   </Col>
                 </Row>

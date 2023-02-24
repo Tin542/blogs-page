@@ -4,10 +4,9 @@ import { Post } from '../../data/post';
 
 const HomeContainer = () => {
 
-  const onChange = (e) => console.log(`radio checked:${e.target.value}`);
   return (
     <>
-      <HomeComponent data={Post} onChange={onChange}/>
+      <HomeComponent data={Post}/>
     </>
   );
 };

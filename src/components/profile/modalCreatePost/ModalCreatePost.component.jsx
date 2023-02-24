@@ -5,28 +5,70 @@ import {
   Layout,
   Avatar,
   Typography,
-  Input,
   Row,
   Col,
   Divider,
+  message,
 } from "antd";
-import { PictureOutlined, FlagOutlined, TagsOutlined } from "@ant-design/icons";
-import profilavatar from "../../../assets/images/face-1.jpg";
+import { collection, addDoc } from "firebase/firestore";
+import { db } from "../../../firebase/FirebaseConfig";
 import MarkdownEditorComponent from "../../common/markdown/MarkdownEditor";
-import MarkdownViewComponent from "../../common/markdown/MarkdownView";
+import UploadImage from "../../common/UploadImage/UploadImage.container";
+import { userSelector } from "../../../redux-flow/selector";
+import { useDispatch, useSelector } from "react-redux";
+import { handleAddPost } from "../../../redux-flow/action";
+import {CREATE_POST_FAILED} from '../../../constants/error/Errors';
 
 const ModalCreatePostComponent = (props) => {
-  const { isModalOpen, setModalCreate } = props;
+  const { isModalOpen, setModalCreate, setLoading } = props;
   const { Header, Content } = Layout;
   const { Title } = Typography;
 
-  const [detail, setDetail] = useState("");
+  const [detail, setDetail] = useState("What are you thinking ?");
+  const [imgURL, setImgURL] = useState("");
+  var myCurrentDate = new Date();
+  var date =
+    myCurrentDate.getDate() +
+    "/" +
+    myCurrentDate.getMonth() +
+    "/" +
+    myCurrentDate.getFullYear();
 
-  const handleOk = () => {
-    setModalCreate(false);
-  };
+  const currentUser = useSelector(userSelector);
+  const dispatch = useDispatch();
+
   const handleCancel = () => {
     setModalCreate(false);
+  };
+
+  const handleCreate = async () => {
+    try {
+      await addDoc(collection(db, "posts"), {
+        uid: currentUser.uid,
+        author: currentUser.username,
+        avatar: currentUser.photo,
+        date: date,
+        detail: detail,
+        image: imgURL,
+      });
+
+      dispatch(
+        handleAddPost({
+          uid: currentUser.uid,
+          author: currentUser.username,
+          avatar: currentUser.photo,
+          date: date,
+          detail: detail,
+          image: imgURL,
+        })
+      );
+      message.success("Create Post successfully");
+      setModalCreate(false);
+      setLoading(true);
+    } catch (error) {
+      message.error(CREATE_POST_FAILED);
+      console.log(error);
+    }
   };
 
   return (
@@ -47,60 +89,21 @@ const ModalCreatePostComponent = (props) => {
                 className="shape-avatar"
                 shape="square"
                 size={40}
-                src={profilavatar}></Avatar>
+                src={currentUser.photo}></Avatar>
               <div className="avatar-info">
-                <Title level={5}>Michael John</Title>
-                <p>michael@mail.com</p>
+                <Title level={5}>{currentUser.name}</Title>
+                <p>{currentUser.username}</p>
               </div>
             </Avatar.Group>{" "}
             <MarkdownEditorComponent value={detail} setValue={setDetail} />
-            <MarkdownViewComponent value={detail} />
+            <Divider>Image</Divider>
             <Row gutter={[5, 5]}>
-              <Col span={8} style={{ "text-align": "center" }}>
-                <Button
-                  type="text"
-                  block
-                  icon={
-                    <TagsOutlined
-                      style={{
-                        color: "blue",
-                      }}
-                    />
-                  }>
-                  Tags person
-                </Button>
-              </Col>
-              <Col span={8} style={{ "text-align": "center" }}>
-                <Button
-                  type="text"
-                  block
-                  icon={
-                    <PictureOutlined
-                      style={{
-                        color: "green",
-                      }}
-                    />
-                  }>
-                  Image/Viedo
-                </Button>
-              </Col>
-              <Col span={8} style={{ "text-align": "center" }}>
-                <Button
-                  type="text"
-                  block
-                  icon={
-                    <FlagOutlined
-                      style={{
-                        color: "cyan",
-                      }}
-                    />
-                  }>
-                  Events
-                </Button>
+              <Col>
+                <UploadImage file={imgURL} setFile={setImgURL} />
               </Col>
             </Row>
             <Divider />
-            <Button type="primary" block>
+            <Button onClick={handleCreate} type="primary" block>
               Create
             </Button>
           </Content>

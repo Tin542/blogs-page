@@ -7,22 +7,27 @@ import {
   Descriptions,
   Avatar,
   Affix,
-  Divider,
   Typography,
   Image,
+  Spin,
 } from "antd";
-import {
-  VideoCameraOutlined,
-  PictureOutlined,
-  FlagOutlined,
-  EditOutlined,
-} from "@ant-design/icons";
+import { EditOutlined } from "@ant-design/icons";
 
 import BgProfile from "../../assets/images/bg-profile.jpg";
+import MarkdownViewComponent from "../common/markdown/MarkdownView";
 
 const ProfileComponent = (props) => {
-  const { data, setModalCreate, user, setModal, setMOdalUpdateAvatar, setModalUpdateBG } = props;
+  const {
+    data,
+    setModalCreate,
+    user,
+    setModal,
+    setMOdalUpdateAvatar,
+    setModalUpdateBG,
+    loading,
+  } = props;
   const { Title } = Typography;
+  console.log("data", data);
 
   let bgImage;
 
@@ -77,8 +82,16 @@ const ProfileComponent = (props) => {
                 alignItems: "center",
                 justifyContent: "flex-end",
               }}>
-              <Button onClick={()=>setMOdalUpdateAvatar(true)} icon={<EditOutlined />}>Edit Avatar</Button>
-              <Button onClick={()=>setModalUpdateBG(true)} icon={<EditOutlined />}>Edit Background</Button>
+              <Button
+                onClick={() => setMOdalUpdateAvatar(true)}
+                icon={<EditOutlined />}>
+                Edit Avatar
+              </Button>
+              <Button
+                onClick={() => setModalUpdateBG(true)}
+                icon={<EditOutlined />}>
+                Edit Background
+              </Button>
             </Col>
           </Row>
         }></Card>
@@ -95,7 +108,9 @@ const ProfileComponent = (props) => {
                 </Button>
               }
               bodyStyle={{ paddingTop: 0, paddingBottom: 16 }}>
-              <p className="text-dark">{user.sumary}</p>
+              <p className="text-dark">
+                <MarkdownViewComponent value={user.sumary} />
+              </p>
               <hr className="my-25" />
               <Descriptions title="Infomations">
                 <Descriptions.Item label="Full Name" span={3}>
@@ -118,98 +133,51 @@ const ProfileComponent = (props) => {
           </Affix>
         </Col>
         <Col span={24} md={16} className="mb-24 ">
-          <Card>
-            <Row>
-              <Col span={24}>
-                <Button
-                  onClick={() => {
-                    setModalCreate(true);
-                  }}
-                  type="text"
-                  block
-                  style={{ borderRadius: "20px" }}>
-                  What are you thinking ?
-                </Button>
-              </Col>
-            </Row>
-
-            <Divider />
-            <Row gutter={[5, 5]}>
-              <Col span={8} style={{ "text-align": "center" }}>
-                <Button
-                  type="text"
-                  block
-                  icon={
-                    <VideoCameraOutlined
-                      style={{
-                        color: "red",
-                      }}
-                    />
-                  }>
-                  Live
-                </Button>
-              </Col>
-              <Col span={8} style={{ "text-align": "center" }}>
-                <Button
-                  type="text"
-                  block
-                  icon={
-                    <PictureOutlined
-                      style={{
-                        color: "green",
-                      }}
-                    />
-                  }>
-                  Image/Viedo
-                </Button>
-              </Col>
-              <Col span={8} style={{ "text-align": "center" }}>
-                <Button
-                  type="text"
-                  block
-                  icon={
-                    <FlagOutlined
-                      style={{
-                        color: "blue",
-                      }}
-                    />
-                  }>
-                  Events
-                </Button>
-              </Col>
-            </Row>
-          </Card>
-
-          <Row gutter={[24, 24]}>
-            {data.map((i, index) => (
-              <Col span={24} key={index}>
-                <Card
-                  className="header-solid h-full"
-                  style={{
-                    width: "100%",
-                    marginTop: 16,
-                  }}>
-                  <Avatar.Group>
-                    <Avatar
-                      className="shape-avatar"
-                      shape="square"
-                      size={40}
-                      src={i.user.avatar}></Avatar>
-                    <div className="avatar-info">
-                      <Title level={5}>{i.user.username}</Title>
-                      <p>{i.time}</p>
-                    </div>
-                  </Avatar.Group>{" "}
-                  <p>{i.detail}</p>
-                  {i.image !== "" ? (
-                    <Image height={400} width="100%" src={i.image} />
-                  ) : (
-                    ""
-                  )}
-                </Card>
-              </Col>
-            ))}
+          <Row>
+            <Col span={24}>
+              <Button
+                onClick={() => {
+                  setModalCreate(true);
+                }}
+                type="text"
+                block
+                style={{ borderRadius: "20px" }}>
+                What are you thinking ?
+              </Button>
+            </Col>
           </Row>
+          <Spin tip="Loading" spinning={loading}>
+            <Row gutter={[24, 24]}>
+              {data.map((i, index) => (
+                <Col span={24} key={index}>
+                  <Card
+                    className="header-solid h-full"
+                    style={{
+                      width: "100%",
+                      marginTop: 16,
+                    }}>
+                    <Avatar.Group>
+                      <Avatar
+                        className="shape-avatar"
+                        shape="square"
+                        size={40}
+                        src={i.avatar}></Avatar>
+                      <div className="avatar-info">
+                        <Title level={5}>{i.author}</Title>
+                        <p>{i.date}</p>
+                      </div>
+                    </Avatar.Group>{" "}
+                    <MarkdownViewComponent value={i.detail} />
+                    {i.image !== "" ? (
+                      <Image height={400} width="100%" src={i.image} />
+                    ) : (
+                      ""
+                    )}
+                  </Card>
+                </Col>
+              ))}
+            </Row>
+          </Spin>
         </Col>
       </Row>
     </>

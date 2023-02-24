@@ -1,25 +1,29 @@
-import {USER_STORE} from '../constants/AppConstant';
+import { USER_STORE } from "../constants/AppConstant";
 
-const userInitState = {
+const initState = {
   data: {
-    search: "",
     users: JSON.parse(localStorage.getItem(USER_STORE)) || {},
   },
-  
+  listPost: [],
 };
 
-const rootReducer = (state = userInitState, action) => {
+const rootReducer = (state = initState, action) => {
   switch (action.type) {
     case "auth/gooleLogin":
       return {
         ...state,
-        data: {...state.data, users: action.payload},
-      }
-    case 'auth/updateProfile' :
+        data: { ...state.data, users: action.payload },
+      };
+    case "auth/updateProfile":
       return {
         ...state,
-        data: {...state.data, users: action.payload},
-      }
+        data: { ...state.data, users: action.payload },
+      };
+    case "post/add":
+      return {
+        ...state,
+        listPost: [...state.listPost, action.payload],
+      };
     default:
       return state;
   }
