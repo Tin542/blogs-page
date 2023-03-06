@@ -8,21 +8,10 @@ import React, { useState, useEffect } from "react";
 import FooterComponent from '../common/FooterComponent';
 
 const LoginComponent = (props) => {
-  const { onFinish, signInWithGoogle } = props;
+  const { onFinish, signInWithGoogle, loading } = props;
 
   const { Title, Text } = Typography;
   const { Header, Footer, Content } = Layout;
-
-  const [loading, setLoading] = useState(true);
-  const handleSpin = () => {
-    setTimeout(() => {
-      setLoading(false);
-    }, 1000);
-  };
-
-  useEffect(() => {
-    handleSpin();
-  });
 
   const loadingIcon = (
     <LoadingOutlined

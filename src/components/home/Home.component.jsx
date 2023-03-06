@@ -1,39 +1,50 @@
-import { Row, Col, Card, Avatar, Divider, List, Affix } from "antd";
+import {
+  Row,
+  Col,
+  Card,
+  Avatar,
+  Divider,
+  List,
+  Affix,
+  Button,
+  Skeleton,
+  Spin,
+} from "antd";
 import InfiniteScroll from "react-infinite-scroll-component";
-import React from "react";
+
 import PostCard from "./postCard/PostCard.component";
 import { User } from "../../data/data";
-import { Comments } from "../../data/post";
-
-let commentCount = (postID) => {
-  let count = 0;
-  for (let i in Comments) {
-    if (Comments[i].post.id === postID) count++;
-  }
-  return count;
-};
 
 const HomeComponent = (props) => {
-  const { data } = props;
+  const { data, setModalCreate, loading } = props;
 
   return (
     <>
       <Row gutter={[24, 0]}>
         <Col span={24} md={16} className="mb-24">
-          <Row gutter={[24, 10]}>
-            {data.map((i, index) => (
-              <PostCard
-                id={i.id}
-                username={i.user.username}
-                avatar={i.user.avatar}
-                image={i.image}
-                detail={i.detail}
-                like={i.like}
-                time={i.time}
-                commentCount={commentCount(i.id)}
-              />
-            ))}
-          </Row>
+          <Spin spinning={loading}>
+            <Row gutter={[24, 10]}>
+              <Button
+                onClick={() => {
+                  setModalCreate(true);
+                }}
+                type="text"
+                block
+                style={{ borderRadius: "20px" }}>
+                What are you thinking ?
+              </Button>
+
+              {data.map((i, index) => (
+                <PostCard
+                  username={i.author}
+                  avatar={i.avatar}
+                  image={i.image}
+                  detail={i.detail}
+                  time={i.date}
+                />
+              ))}
+            </Row>
+          </Spin>
         </Col>
         <Col span={24} md={8} className="mb-24">
           <Affix offsetTop={10}>
@@ -41,11 +52,20 @@ const HomeComponent = (props) => {
               bordered={false}
               bodyStyle={{ paddingTop: 0 }}
               className="header-solid h-full  ant-list-yes"
-              title={<h6 className="font-semibold m-0">Friends</h6>}>
+              title={<h6 className="font-semibold m-0">Other people</h6>}>
               <InfiniteScroll
                 dataLength={User.length}
-                next={false}
-                hasMore={User.length < 50}
+                next={User}
+                hasMore={User.length < 1}
+                loader={
+                  <Skeleton
+                    avatar
+                    paragraph={{
+                      rows: 1,
+                    }}
+                    active
+                  />
+                }
                 endMessage={<Divider plain>It is all, nothing more 🤐</Divider>}
                 scrollableTarget="scrollableDiv">
                 <List

@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import ShowMoreText from "react-show-more-text";
 import { Card, Typography, Avatar, Image } from "antd";
+import MarkdownViewComponent from "../../common/markdown/MarkdownView";
 
 const PostCard = (props) => {
-  const { id, username, avatar, image, detail, time } = props;
+  const { username, avatar, image, detail, time } = props;
   const { Title, Text } = Typography;
 
   return (
@@ -32,7 +33,8 @@ const PostCard = (props) => {
         anchorClass="show-more-less-clickable"
         expanded={false}
         width={0}
-        truncatedEndingComponent={"... "}>{detail}
+        truncatedEndingComponent={"... "}>
+        <MarkdownViewComponent value={detail} />
       </ShowMoreText>
       {image !== "" ? <Image height={400} width="100%" src={image} /> : ""}
     </Card>

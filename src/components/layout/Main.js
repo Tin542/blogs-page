@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import { Layout, Affix } from "antd";
+import { Layout, Affix, Drawer } from "antd";
 import Sidenav from "./Sidenav";
 import Footer from "./Footer";
 import Header from "./Header";
@@ -9,6 +9,7 @@ const { Header: AntHeader, Content, Sider } = Layout;
 
 function Main({ children }) {
   const [visible, setVisible] = useState(false);
+  const [placement, setPlacement] = useState("left");
   const [sidenavColor, setSidenavColor] = useState("#1890ff");
   const [sidenavType, setSidenavType] = useState("transparent");
   const [fixed, setFixed] = useState(false);
@@ -21,13 +22,38 @@ function Main({ children }) {
   let { pathname } = useLocation();
   pathname = pathname.replace("/", "");
 
-  useEffect(() => {}, [pathname]);
-
   return (
     <Layout
       className={`layout-dashboard ${
         pathname === "profile" ? "layout-profile" : ""
       }`}>
+      <Drawer
+        title={false}
+        placement={placement}
+        closable={false}
+        onClose={() => setVisible(false)}
+        visible={visible}
+        key={placement}
+        width={250}
+        className={`drawer-sidebar ${
+          pathname === "rtl" ? "drawer-sidebar-rtl" : ""
+        } `}>
+        <Layout
+          className={`layout-dashboard ${
+            pathname === "rtl" ? "layout-dashboard-rtl" : ""
+          }`}>
+          <Sider
+            trigger={null}
+            width={250}
+            theme="light"
+            className={`sider-primary ant-layout-sider-primary ${
+              sidenavType === "#fff" ? "active-route" : ""
+            }`}
+            style={{ background: sidenavType }}>
+            <Sidenav color={sidenavColor} />
+          </Sider>
+        </Layout>
+      </Drawer>
       <Sider
         breakpoint="lg"
         collapsedWidth="0"

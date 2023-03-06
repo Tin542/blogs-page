@@ -1,4 +1,5 @@
 import { USER_STORE } from "../constants/AppConstant";
+import { Post } from "../data/post";
 
 const initState = {
   data: {

@@ -27,7 +27,6 @@ const ProfileComponent = (props) => {
     loading,
   } = props;
   const { Title } = Typography;
-  console.log("data", data);
 
   let bgImage;
 

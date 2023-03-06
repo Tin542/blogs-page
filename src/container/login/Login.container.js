@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import LoginComponent from "../../components/login/Login.component";
 import { LoginNotification } from "../../notifications/LoginNotification";
 import { useNavigate } from "react-router-dom";
@@ -23,6 +23,7 @@ const LoginContainer = () => {
   const navigate = useNavigate();
   // const [user, loading, error] = useAuthState(auth);
   const googleProvider = new GoogleAuthProvider();
+  const [loading, setLoading] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -133,7 +134,7 @@ const LoginContainer = () => {
 
   return (
     <>
-      <LoginComponent onFinish={onFinish} signInWithGoogle={signInWithGoogle} />
+      <LoginComponent loading={loading} onFinish={onFinish} signInWithGoogle={signInWithGoogle} />
     </>
   );
 };
